@@ -33,13 +33,15 @@ void ledblink()
 void main(void) {
     //ledblink();
     uart_init();
-    while (1)
-    {
+
+   while (1)
+   {
+       uart_echo();
         /*uart_putchar('c');
         _delay_ms(500);
         uart_putchar('\n');
         _delay_ms(500);*/
-        uart_putstr("hej calle \n");
-        _delay_ms(500);
+        //uart_putstr("hej calle \n");
+        //_delay_ms(500);
     }
 }

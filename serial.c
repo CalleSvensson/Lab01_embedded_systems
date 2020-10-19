@@ -18,7 +18,7 @@ void uart_init(void)
 
 void uart_putchar(char chr)
 {
-    if (chr == '\n') // Check if the char is a new line
+    if (chr == '\r') // Check if the char is a new line
     {
         while (!(UCSR0A & (1 << UDRE0))); // Wait for empty transmit buffer
         UDR0 = '\r';
@@ -44,9 +44,12 @@ void uart_putstr(const char* str)
 
 char uart_getchar(void)
 {
-	return 0;
+    while (!(UCSR0A & (1 << RXC0)));    // Wait for data to be received
+	return UDR0; // return input value
 }
 
 void uart_echo(void)
 {
+    char c = uart_getchar();  // Gets input char
+    uart_putchar(c);  // Prints input char
 }
