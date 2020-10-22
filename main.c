@@ -5,43 +5,30 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "serial.h"
+#include "led.h"
 
-#define REDLED PB3;
- 
-void ledblink()
+
+void main(void) 
 {
-    DDRB |= (1 << PB3); // set pin 11 on Arduino board to output
-    DDRB |= (1 << PB2); // set pin 10 on Arduino board to output
-    DDRB |= (1 << PB1); // set pin 9 on Arduino board to output
-
-    while (true)
-    {
-        PORTB |= (1 << PB3);// set pin 11 on Arduino board to HIGH
-        _delay_ms(500);
-        PORTB &= ~(1 << PB3);// set pin 11 on Arduino board to LOW
-        _delay_ms(500);        
-        PORTB |= (1 << PB2);// set pin 10 on Arduino board to HIGH
-        _delay_ms(500);
-        PORTB &= ~(1 << PB2);// set pin 10 on Arduino board to LOW
-        _delay_ms(500);        
-        PORTB |= (1 << PB1);// set pin 9 on Arduino board to HIGH
-        _delay_ms(500);
-        PORTB &= ~(1 << PB1);// set pin 9 on Arduino board to LOW
-        _delay_ms(500);
-    }
-}
-void main(void) {
-    //ledblink();
+    char input_string[10];
+    led_init();
     uart_init();
-
+    //led_blink(); 
    while (1)
    {
-       uart_echo();
+
+       //uart_echo();
+       uart_getstr(input_string);
+       uart_led_hander(input_string);
+       //uart_putstr(input_string);
         /*uart_putchar('c');
         _delay_ms(500);
         uart_putchar('\n');
         _delay_ms(500);*/
-        //uart_putstr("hej calle \n");
-        //_delay_ms(500);
+        //uart_putstr("hej calle\n");
+       //uart_putstr("ON\r\n");
+       //_delay_ms(500);
+       //uart_putstr("OFF\r\n");
+       //_delay_ms(500);
     }
 }
